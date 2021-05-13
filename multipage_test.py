@@ -20,9 +20,8 @@ def app2(prev_vars):
 	var1, var2 = prev_vars
 	if st.button("Sum"):
 		sum_var = var1+var2
-		multiplication_var = 87
 		st.write(sum_var)
-		save([sum_var, multiplication_var], "app2")
+		save([var1, var2], "app2")
 		#####
 
 def app3(prev_vars):
