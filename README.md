@@ -17,7 +17,7 @@ It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/str
 5. class `MultiPage` -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).
 
 ## MultiPage Class Methods
-1. `add_app(self, name, func)` -> Creates an app and adds it to the "apps" attribute;
+1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
 2. `run(self)` -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in a previous page, if the "app" function correctly applies "save".
 
 # How to use it
