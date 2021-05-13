@@ -41,9 +41,7 @@ class MultiPage:
 		self.apps.append(new_app)
 
 	def run(self):
-		#Inicializa o cache
 		initialize()
-
 
 		with open(os.path.join(cache, 'cache.txt'), "r") as f:
 		    pag = f.readline()
