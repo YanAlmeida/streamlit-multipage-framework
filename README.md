@@ -5,7 +5,7 @@ It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/str
 # Required Libraries
 1 - Streamlit (pip install streamlit);\
 2 - Joblib (pip install joblib);\
-3 - OS (pip install os).\
+3 - OS (pip install os).
 
 # Code Elements:
 
@@ -14,11 +14,11 @@ It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/str
 2 - function save(var_list, name) -> saves a list of variables and associates it to a name;\
 3 - function load(name) -> loads a var_list previously saved;\
 4 - class "app" -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");\
-5 - class "MultiPage" -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).\
+5 - class "MultiPage" -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).
 
 ## MultiPage Class Methods
 1 - add_app(self, name, func) -> Creates an app and adds it to the "apps" attribute;\
-2 - run(self) -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in a previous page, if the "app" function correctly applies "save".\
+2 - run(self) -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in a previous page, if the "app" function correctly applies "save".
 
 # How to use it
 1 - Download "multipage.py" and put it in the same folder as your app;\
