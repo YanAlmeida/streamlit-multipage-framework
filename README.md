@@ -3,7 +3,7 @@ Framework for implementing multipage structure in streamlit apps.
 It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/streamlit-multiapps.
 
 # Required Libraries
-1 - Streamlit (pip install streamlit);
+1 - Streamlit (pip install streamlit);\n
 2 - Joblib (pip install joblib);
 3 - OS (pip install os).
 
