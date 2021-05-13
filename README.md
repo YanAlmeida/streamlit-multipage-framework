@@ -7,7 +7,7 @@ It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/str
 2 - Joblib (pip install joblib);\
 3 - OS (pip install os).
 
-# Code Elements:
+# Code Elements
 
 ## Functions and Classes
 1 - function initialize() -> runs when the program starts and sets the initial page as 0;\
