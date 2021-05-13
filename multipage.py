@@ -7,9 +7,15 @@ cache = os.path.join(path, 'cache')
 
 @st.cache(suppress_st_warning=True)
 def initialize():
-	with open(os.path.join(cache, 'cache.txt'), "w") as f:
-	    f.write("0")
-	    f.close()
+	try:
+		with open(os.path.join(cache, 'cache.txt'), "w") as f:
+		    f.write("0")
+		    f.close()
+	except FileNotFoundError:
+		os.mkdir(cache)
+		with open(os.path.join(cache, 'cache.txt'), "w") as f:
+		    f.write("0")
+		    f.close()
 
 def save(var_list, name):
 	joblib.dump(var_list, os.path.join(cache, name + '.pkl'))
