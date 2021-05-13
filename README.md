@@ -13,8 +13,8 @@ It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/str
 1. function `initialize()` -> runs when the program starts and sets the initial page as 0;
 2. function `save(var_list, name)` -> saves a list of variables and associates it to a name;
 3. function `load(name)` -> loads a var_list previously saved;
-4. class "app" -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");
-5. class "MultiPage" -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).
+4. class `app` -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");
+5. class `MultiPage` -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the "apps" attribute;
