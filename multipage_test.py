@@ -1,6 +1,5 @@
 import streamlit as st
 from multipage import save, MultiPage
-import pandas as pd
 
 app = MultiPage()
 app.next_page_button = "Next Page"
