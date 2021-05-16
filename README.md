@@ -20,7 +20,7 @@ Developed by: Yan Almeida.
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
-2. `run(self)` -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in a previous page, if the "app" function correctly applies "save".
+2. `run(self)` -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in a previous page, if the app function correctly applies "save".
 
 # How to use it
 1. Download "multipage.py" and put it in the same folder as your app;
