@@ -27,6 +27,6 @@ Developed by: Yan Almeida.
 2. Import the class `MultiPage` and the function `save` from multipage.py;
 3. Create a `MultiPage` object;
 4. Set the buttons' labels (next_page_button and previous_page_button attributes);
-5. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables);
+5. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables). If you do save variables, they are going to be passed as argument to the next function (list type);
 6. Use the `add_app` method to include each one of the functions. IMPORTANT: If you use the "save" function, it's necessary to use the same name in the `add_app` method;
 7. Use the `run` method.
