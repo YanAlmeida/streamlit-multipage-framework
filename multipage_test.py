@@ -32,9 +32,12 @@ def app2(prev_vars):
 		#####
 
 def app3(prev_vars):
-	var1, var2 = prev_vars
-	if st.button("Multiply"):
-		st.write(var1*var2)
+	try:
+		var1, var2 = prev_vars
+		if st.button("Multiply"):
+			st.write(var1*var2)
+	except:
+		st.write("Oops... Something went wrong...")
 
 app.add_app("App1", app1)
 app.add_app("App2", app2)
