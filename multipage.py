@@ -27,6 +27,10 @@ def load(name):
 	except FileNotFoundError:
 		return ''
 
+def clear_cache():
+	filelist = [file for file in os.listdir(cache) if file.endswith(".pkl")]
+	for file in filelist:
+		os.remove(os.path.join(cache, file))
 
 class app:
 	def __init__(self, name, func, var_list):
@@ -36,8 +40,10 @@ class app:
 
 
 class MultiPage:
-	def __init__(self, next_page="Next Page", previous_page="Previous Page"):
+	def __init__(self, next_page="Next Page", previous_page="Previous Page", navbar_name="Navigation", block_navbar=False):
 		self.apps = []
+		self.navbar_name = navbar_name
+		self.block_navbar = block_navbar
 		self.next_page_button = next_page
 		self.previous_page_button = previous_page
 
@@ -79,6 +85,21 @@ class MultiPage:
 			        f.truncate()
 			        f.write(f"{pag}")
 			        f.close()
+
+		if not self.block_navbar:
+
+			st.sidebar.markdown(f"<h1 style='text-align:center;'>{self.navbar_name}</h1>", unsafe_allow_html=True)
+			st.sidebar.text('\n')
+
+
+			for i in range(len(self.apps)):
+				if st.sidebar.button(self.apps[i].name):
+					pag = i
+					with open(os.path.join(cache, 'cache.txt'), "w") as f:
+						f.truncate()
+						f.write(f"{pag}")
+						f.close()
+
 
 		if pag==0:
 			self.apps[pag].func()
