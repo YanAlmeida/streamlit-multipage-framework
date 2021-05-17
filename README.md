@@ -13,7 +13,7 @@ Developed by: Yan Almeida.
 
 ## Functions and Classes
 1. function `initialize()` -> runs when the program starts and sets the initial page as 0;
-2. function `save(var_list, name)` -> saves a list of variables and associates it to a name;
+2. function `save(var_list, name)` -> saves a list of variables and associates it with a page's name;
 3. function `load(name)` -> loads a var_list previously saved;
 4. function `clear_cache()` -> clears the variables in cache;
 5. class `app` -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");
