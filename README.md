@@ -15,8 +15,9 @@ Developed by: Yan Almeida.
 1. function `initialize()` -> runs when the program starts and sets the initial page as 0;
 2. function `save(var_list, name)` -> saves a list of variables and associates it to a name;
 3. function `load(name)` -> loads a var_list previously saved;
-4. class `app` -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");
-5. class `MultiPage` -> class to create the MultiPage structure, defined by three attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button(in order to define the label of the buttons that switch between pages).
+4. function `clear_cache()` -> clears the variables in cache;
+5. class `app` -> class to create pages (apps), defined by three attributes: name, func (app script defined as a function in the code) and var_list (list of variables to "store");
+6. class `MultiPage` -> class to create the MultiPage structure, defined by the following attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button (in order to define the label of the buttons that switch between pages), navbar_name (to set the navigation bar header) and block_navbar (to keep your app without a navigation bar).
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
@@ -26,7 +27,7 @@ Developed by: Yan Almeida.
 1. Download "multipage.py" and put it in the same folder as your app;
 2. Import the class `MultiPage` and the function `save` from multipage.py;
 3. Create a `MultiPage` object;
-4. Set the buttons' labels (next_page_button and previous_page_button attributes);
+4. Set the buttons' labels (next_page_button and previous_page_button attributes) and the navigation bar name (navbar_name attribute);
 5. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables). If you do save variables, they are going to be passed as argument to the next function (list type);
 6. Use the `add_app` method to include each one of the functions. IMPORTANT: If you use the "save" function, it's necessary to use the same name in the `add_app` method;
 7. Use the `run` method.
