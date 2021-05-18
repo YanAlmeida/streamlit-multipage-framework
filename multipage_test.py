@@ -14,7 +14,7 @@ def app1():
 	if st.button("Click here to save the variables..."):
 		st.write("First number: " + str(var1))
 		st.write('Second number: ' + str(var2))
-		save([var1, var2],"App1", ["App2", "App3"])
+		save(var_list=[var1, var2], name="App1", page_names=["App2", "App3"])
 		######
 
 def app2(prev_vars):
@@ -30,7 +30,7 @@ def app2(prev_vars):
 		if st.button("Click here to save a new variable"):
 			var3 = 27
 			st.write(var3)
-			save([var3], "App2", ["App3"])
+			save(var_list=[var3], name="App2", page_names=["App3"])
 
 
 
