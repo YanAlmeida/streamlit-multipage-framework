@@ -13,7 +13,7 @@ Developed by: Yan Almeida.
 
 ## Functions and Classes
 1. function `initialize()` -> Runs when the program starts and sets the initial page as 0;
-2. function `save(var_list, name, page_names)` -> Saves a list of variables, associates it with a page's name and defines which pages will receive these variables;
+2. function `save(var_list, name, page_names)` -> Saves a list of variables, associates it with a name and defines which pages will receive these variables;
 3. function `load(name)` -> Loads a var_list previously saved;
 4. function `clear_cache()` -> Clears the variables in cache;
 5. class `app` -> Class to create pages (apps), defined by two attributes: name and func (app script defined as a function in the code);
@@ -30,5 +30,5 @@ Developed by: Yan Almeida.
 3. Create a `MultiPage` object;
 4. Set the buttons' labels (next_page_button and previous_page_button attributes) and the navigation bar name (navbar_name attribute);
 5. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables). If you do save variables, they are going to be passed as argument to the target functions;
-6. Use the `add_app` method to include each one of the functions. IMPORTANT: If you use the "save" function, it's necessary to use the same name in the `add_app` method;
+6. Use the `add_app` method to include each one of the functions;
 7. Use the `run` method.
