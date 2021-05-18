@@ -25,7 +25,8 @@ def save(var_list, name, page_names):
 
 	for app in page_names:
 		if app in list(dic.keys()):
-			dic[app] += [name]
+			if name not in dic[app]:
+				dic[app] += [name]
 		else:
 			dic[app] = [name]
 
