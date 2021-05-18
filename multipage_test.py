@@ -14,30 +14,38 @@ def app1():
 	if st.button("Click here to save the variables..."):
 		st.write("First number: " + str(var1))
 		st.write('Second number: ' + str(var2))
-		save([var1, var2],"app1")
+		save([var1, var2],"App1", ["App2", "App3"])
 		######
 
 def app2(prev_vars):
-	try:
+	if prev_vars == None:
+		st.write("Ooops... You forgot to save the variables...")
+
+	else:
 		var1, var2 = prev_vars
 		if st.button("Click here to sum the variables"):
 			sum_var = var1+var2
 			st.write(sum_var)
+			
+		if st.button("Click here to save a new variable"):
+			var3 = 27
+			st.write(var3)
+			save([var3], "App2", ["App3"])
 
-		save([var1, var2], "app2")
-	except:
-		st.write("You forgot to save the variables...")
 
 
 		#####
 
 def app3(prev_vars):
-	try:
-		var1, var2 = prev_vars
-		if st.button("Multiply"):
-			st.write(var1*var2)
-	except:
-		st.write("Oops... Something went wrong...")
+	if prev_vars == None:
+		st.write("Ooops... You forgot to save the variables...")
+	else:
+		try:
+			var1, var2, var3 = prev_vars
+			if st.button("Click here to multiply the variables"):
+				st.write(var1*var2*var3)
+		except:
+			("Ooops... You forgot to save the last variable...")
 
 app.add_app("App1", app1)
 app.add_app("App2", app2)

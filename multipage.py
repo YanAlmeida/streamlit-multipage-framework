@@ -17,8 +17,22 @@ def initialize():
 		    f.write("0")
 		    f.close()
 
-def save(var_list, name):
+def save(var_list, name, page_names):
+	try:
+		dic = joblib.load(os.path.join(cache, 'dic.pkl'))
+	except FileNotFoundError:
+		dic = {}
+
+	for app in page_names:
+		if app in list(dic.keys()):
+			dic[app] += [name]
+		else:
+			dic[app] = [name]
+
+
 	joblib.dump(var_list, os.path.join(cache, name + '.pkl'))
+	joblib.dump(dic, os.path.join(cache, 'dic.pkl'))
+
 	return os.path.join(cache, name + '.pkl')
 
 def load(name):
@@ -33,10 +47,9 @@ def clear_cache():
 		os.remove(os.path.join(cache, file))
 
 class app:
-	def __init__(self, name, func, var_list):
+	def __init__(self, name, func):
 		self.name = name
 		self.func = func
-		self.var_list = var_list
 
 
 class MultiPage:
@@ -47,9 +60,12 @@ class MultiPage:
 		self.next_page_button = next_page
 		self.previous_page_button = previous_page
 
+	def disable_navbar(self):
+		self.block_navbar = True
+
 
 	def add_app(self, name, func):
-		new_app = app(name, func, load(name))
+		new_app = app(name, func)
 		self.apps.append(new_app)
 
 	def run(self):
@@ -86,25 +102,33 @@ class MultiPage:
 			        f.write(f"{pag}")
 			        f.close()
 
-		if not self.block_navbar:
-
-			st.sidebar.markdown(f"<h1 style='text-align:center;'>{self.navbar_name}</h1>", unsafe_allow_html=True)
-			st.sidebar.text('\n')
 
 
-			for i in range(len(self.apps)):
-				if st.sidebar.button(self.apps[i].name):
-					pag = i
-					with open(os.path.join(cache, 'cache.txt'), "w") as f:
-						f.truncate()
-						f.write(f"{pag}")
-						f.close()
+		st.sidebar.markdown(f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""", unsafe_allow_html=True)
+		st.sidebar.text('\n')
+
+
+		for i in range(len(self.apps)):
+			if st.sidebar.button(self.apps[i].name):
+				pag = i
+				with open(os.path.join(cache, 'cache.txt'), "w") as f:
+					f.truncate()
+					f.write(f"{pag}")
+					f.close()
 
 
 		if pag==0:
 			self.apps[pag].func()
+
 		else:
-			self.apps[pag].func(self.apps[pag-1].var_list)
-			
+			try:
+				prev_vars = []
+				dic = joblib.load(os.path.join(cache, 'dic.pkl'))
+				for appname in dic[self.apps[pag].name]:
+					prev_vars += load(os.path.join(cache, appname))
+				if len(prev_vars) == 1:
+					prev_vars = prev_vars[0]
+			except:
+				prev_vars = None
 
-
+			self.apps[pag].func(prev_vars)
