@@ -21,7 +21,7 @@ Developed by: Yan Almeida.
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
-2. `disable_navbar(self)` -> Remover the sidebar options
+2. `disable_navbar(self)` -> Removes the navigation bar;
 3. `run(self)` -> Creates a sidebar with buttons to switch between pages and runs the apps depending on the chosen page. It also keeps the variables defined in previous pages, if the app function correctly applies "save".
 
 # How to use it
