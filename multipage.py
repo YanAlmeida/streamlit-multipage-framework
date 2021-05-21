@@ -117,19 +117,14 @@ class MultiPage:
 					f.write(f"{pag}")
 					f.close()
 
+		try:
+			prev_vars = []
+			dic = joblib.load(os.path.join(cache, 'dic.pkl'))
+			for appname in dic[self.apps[pag].name]:
+				prev_vars += load(os.path.join(cache, appname))
+			if len(prev_vars) == 1:
+				prev_vars = prev_vars[0]
+		except:
+			prev_vars = None
 
-		if pag==0:
-			self.apps[pag].func()
-
-		else:
-			try:
-				prev_vars = []
-				dic = joblib.load(os.path.join(cache, 'dic.pkl'))
-				for appname in dic[self.apps[pag].name]:
-					prev_vars += load(os.path.join(cache, appname))
-				if len(prev_vars) == 1:
-					prev_vars = prev_vars[0]
-			except:
-				prev_vars = None
-
-			self.apps[pag].func(prev_vars)
+		self.apps[pag].func(prev_vars)

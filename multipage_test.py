@@ -6,7 +6,7 @@ app.navbar_name = "Navigation"
 app.next_page_button = "Next Page"
 app.previous_page_button = "Previous Page"
 
-def app1():
+def app1(prev_vars):
 	clear_cache()
 	st.button("Do nothing...")
 	var1 = 10
