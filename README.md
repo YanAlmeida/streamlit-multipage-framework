@@ -15,9 +15,10 @@ Developed by: Yan Almeida.
 1. function `initialize()` -> Runs when the program starts and sets the initial page as 0;
 2. function `save(var_list, name, page_names)` -> Saves a list of variables, associates it with a name and defines which pages will receive these variables;
 3. function `load(name)` -> Loads a var_list previously saved;
-4. function `clear_cache()` -> Clears the variables in cache;
-5. class `app` -> Class to create pages (apps), defined by two attributes: name and func (app script defined as a function in the code);
-6. class `MultiPage` -> Class to create the MultiPage structure, defined by the following attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button (in order to define the label of the buttons that switch between pages), navbar_name (to set the navigation bar header) and block_navbar (to keep your app without a navigation bar).
+4. function `clear_cache(name=None)` -> Clears the variables in cache. Receives a list of variables to erase, but if none is given, clears all of the variables;
+5. function `start_app()` -> Clears all the variables in the cache when the app is started (but not after this);
+6. class `app` -> Class to create pages (apps), defined by two attributes: name and func (app script defined as a function in the code);
+7. class `MultiPage` -> Class to create the MultiPage structure, defined by the following attributes: apps (a list containing the pages (apps)), next_page_button and previous_page_button (in order to define the label of the buttons that switch between pages), navbar_name (to set the navigation bar header) and block_navbar (to keep your app without a navigation bar).
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
