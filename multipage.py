@@ -5,6 +5,8 @@ import joblib
 path = os.getcwd()
 cache = os.path.join(path, 'cache')
 
+
+
 @st.cache(suppress_st_warning=True)
 def initialize():
 	try:
@@ -42,10 +44,18 @@ def load(name):
 	except FileNotFoundError:
 		return ''
 
-def clear_cache():
-	filelist = [file for file in os.listdir(cache) if file.endswith(".pkl")]
-	for file in filelist:
-		os.remove(os.path.join(cache, file))
+def clear_cache(filenames=None):
+	if filenames:
+		for element in filenames:
+			os.remove(os.path.join(cache, element + '.pkl'))
+	else:
+		filelist = [file for file in os.listdir(cache) if file.endswith(".pkl")]
+		for file in filelist:
+			os.remove(os.path.join(cache, file))
+
+@st.cache(suppress_st_warning=True)
+def start_app():
+	clear_cache()
 
 class app:
 	def __init__(self, name, func):
