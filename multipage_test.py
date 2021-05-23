@@ -12,7 +12,7 @@ def app1(prev_vars): #First page
 	if prev_vars != None:
 		start_index = prev_vars #Defines the start index for a selectbox (defined below) as the option previously chosen by the user
 	else:
-		start_index = 1 #Defines the start index for a selectbox (define below) as 1
+		start_index = 1 #Defines the start index for a selectbox (defined below) as 1
 
 	st.button("Do nothing...")
 	var1 = 10
