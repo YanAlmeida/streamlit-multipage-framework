@@ -55,7 +55,10 @@ def clear_cache(filenames=None):
 
 @st.cache(suppress_st_warning=True)
 def start_app():
-	clear_cache()
+	try:
+		clear_cache()
+	except:
+		pass
 
 class app:
 	def __init__(self, name, func):
