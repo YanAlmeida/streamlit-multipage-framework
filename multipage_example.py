@@ -4,6 +4,7 @@ from multipage import save, MultiPage, start_app, clear_cache
 start_app() #Clears the cache when the app is started
 
 app = MultiPage()
+app.start_button = "Let's go!"
 app.navbar_name = "Navigation"
 app.next_page_button = "Next Page"
 app.previous_page_button = "Previous Page"
