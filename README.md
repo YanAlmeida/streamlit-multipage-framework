@@ -25,8 +25,8 @@ Developed by: Yan Almeida.
 ## MultiPage Public Attributes
 1. `next_page_button` -> Defines the label of the "Next Page" button. Default: "Next Page";
 2. `previous_page_button` -> Defines the label of the "Previous Page" button. Default: "Previous Page";
-3. `start_button` -> Defines the label of the starting page button that starts the application (it's only used if the app has a starting page). Default: "Let's go!"
-4. `navbar_name` -> Defines the Navigation Bar's name. Default: "Navigation";
+3. `start_button` -> Defines the label of the starting page button that starts the application (it's only used if the app has a starting page). Default: "Let's go!";
+4. `navbar_name` -> Defines the Navigation Bar's name. Default: "Navigation".
 
 ## MultiPage Class Methods
 1. `add_app(self, name, func)` -> Creates an app and adds it to the `apps` attribute;
