@@ -36,10 +36,11 @@ Developed by: Yan Almeida.
 
 # How to use it
 1. Download "multipage.py" and put it in the same folder as your app;
-2. Import the class `MultiPage` and the function `save` from multipage.py;
+2. Import the class `MultiPage` and the functions `save` and `start_app` from multipage.py;
 3. Create a `MultiPage` object;
-4. Set the buttons' labels (next_page_button and previous_page_button attributes) and the navigation bar name (navbar_name attribute);
-5. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables). If you do save variables, they are going to be passed as argument to the target functions;
-6. Use the `add_app` method to include each one of the functions;
-7. If you have a starting page for your program, include it by using the `set_initial_page` method;
-8. Use the `run` method.
+4. Use the function `start_app` to clear the cache;
+5. Set the buttons' labels (next_page_button and previous_page_button attributes) and the navigation bar name (navbar_name attribute);
+6. Define the different pages (apps) as functions (use the `save` method in the end of each function if you need the app to remember the variables). If you do save variables, they are going to be passed as argument to the target functions;
+7. Use the `add_app` method to include each one of the functions;
+8. If you have a starting page for your program, include it by using the `set_initial_page` method;
+9. Use the `run` method.
