@@ -12,11 +12,11 @@ cache = path / 'cache'
 cache_file = cache / "data.pkl"
 
 
-def change_page(page):
+def change_page(page: int) -> None:
     save({"current_page": page}, ["global"])
 
 
-def read_page():
+def read_page() -> int:
     data = load()["global"]
 
     if "current_page" in data:
@@ -26,11 +26,11 @@ def read_page():
 
 
 @st.cache(suppress_st_warning=True)
-def initialize(initial_page: int):
+def initialize(initial_page: int) -> None:
     change_page(initial_page)
 
 
-def save(variables: Dict[str, Any], namespaces: List[str]):
+def save(variables: Dict[str, Any], namespaces: List[str]) -> None:
     if not variables or not namespaces:
         return
 
@@ -47,19 +47,19 @@ def save(variables: Dict[str, Any], namespaces: List[str]):
 
     _save(data)
 
-def _save(data):
+def _save(data: Dict[str, Any]) -> None:
     cache.mkdir(parents=True, exist_ok=True)
     joblib.dump(data, cache_file)
 
 
-def load():
+def load() -> Dict[str, Any]:
     if not cache_file.exists():
         return defaultdict(dict)
     
     return joblib.load(cache_file)
 
 
-def clear_cache(variables=None, namespaces=None, all_variables=None):
+def clear_cache(variables: Dict[str, Any] = None, namespaces: List[str] = None, all_variables: bool = False) -> None:
     if variables and namespaces:
         data = load()
         for namespace in namespaces:
@@ -77,7 +77,7 @@ def clear_cache(variables=None, namespaces=None, all_variables=None):
 
 
 @st.cache(suppress_st_warning=True)
-def start_app():
+def start_app() -> None:
     clear_cache()
 
 
@@ -105,14 +105,14 @@ class MultiPage:
         self.__initial_page = App("__INITIALPAGE__", func)
     
     @property
-    def __initial_page_set(self):
+    def __initial_page_set(self) -> bool:
         return self.__initial_page is not None
 
-    def add_app(self, name: str, func):
+    def add_app(self, name: str, func: Callable()) -> None:
         new_app = App(name, func)
         self.__apps.append(new_app)
 
-    def run(self):
+    def run(self) -> None:
         initial_page = -1 if self.__initial_page_set else 0
         initialize(initial_page)
 
