@@ -114,7 +114,7 @@ class MultiPage:
     def __initial_page_set(self) -> bool:
         return self.__initial_page is not None
 
-    def add_app(self, name: str, func: Callable()) -> None:
+    def add_app(self, name: str, func: Callable) -> None:
         new_app = App(name, func)
         self.__apps.append(new_app)
 
