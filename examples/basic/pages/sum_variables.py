@@ -1,5 +1,5 @@
 import streamlit as st
-from multipage import save
+from streamlit_multipage import save
 
 
 def sum_variables(**prev_vars):

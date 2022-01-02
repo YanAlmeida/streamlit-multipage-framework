@@ -1,5 +1,5 @@
 import streamlit as st
-from multipage import save, clear_cache
+from streamlit_multipage import save, clear_cache
 
 
 def multiply_variables(**prev_vars):
