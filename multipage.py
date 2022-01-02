@@ -8,7 +8,7 @@ import streamlit as st
 import joblib
 
 path = Path(__file__).resolve().parent
-cache = path / 'cache'
+cache = path / "cache"
 cache_file = cache / "data.pkl"
 
 
@@ -42,10 +42,11 @@ def save(variables: Dict[str, Any], namespaces: List[str]) -> None:
         if namespace in data:
             data[namespace].update(variables)
             continue
-        
+
         data[namespace] = variables
 
     _save(data)
+
 
 def _save(data: Dict[str, Any]) -> None:
     cache.mkdir(parents=True, exist_ok=True)
@@ -55,11 +56,15 @@ def _save(data: Dict[str, Any]) -> None:
 def load() -> Dict[str, Any]:
     if not cache_file.exists():
         return defaultdict(dict)
-    
+
     return joblib.load(cache_file)
 
 
-def clear_cache(variables: Dict[str, Any] = None, namespaces: List[str] = None, all_variables: bool = False) -> None:
+def clear_cache(
+    variables: Dict[str, Any] = None,
+    namespaces: List[str] = None,
+    all_variables: bool = False,
+) -> None:
     if variables and namespaces:
         data = load()
         for namespace in namespaces:
@@ -69,7 +74,7 @@ def clear_cache(variables: Dict[str, Any] = None, namespaces: List[str] = None, 
                     continue
 
                 del data[namespace][variable]
-        
+
         _save(data)
 
     if all_variables:
@@ -85,6 +90,7 @@ def start_app() -> None:
 class App:
     name: str
     func: Callable
+
 
 @dataclass
 class MultiPage:
@@ -103,7 +109,7 @@ class MultiPage:
     @initial_page.setter
     def initial_page(self, func: Callable) -> None:
         self.__initial_page = App("__INITIALPAGE__", func)
-    
+
     @property
     def __initial_page_set(self) -> bool:
         return self.__initial_page is not None
@@ -146,8 +152,11 @@ class MultiPage:
                     page = min(len(self.__apps) - 1, page + 1)
                     change_page(page)
 
-            st.sidebar.markdown(f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""", unsafe_allow_html=True)
-            st.sidebar.text('\n')
+            st.sidebar.markdown(
+                f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
+                unsafe_allow_html=True,
+            )
+            st.sidebar.text("\n")
 
             for i in range(len(self.__apps)):
                 if st.sidebar.button(self.__apps[i].name):
