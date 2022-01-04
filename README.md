@@ -3,6 +3,7 @@ Framework for implementing multipage structure in streamlit apps.
 It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/streamlit-multiapps.
 
 Developed by: Yan Almeida.
+Improved by: ELC.
 
 # Required Libraries
 1. Streamlit (`pip install streamlit`);
