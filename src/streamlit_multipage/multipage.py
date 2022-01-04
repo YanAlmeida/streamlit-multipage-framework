@@ -1,11 +1,10 @@
 from dataclasses import dataclass, field
-from typing import List, Callable
+from typing import List, Callable, NamedTuple
 
 from .helper import change_page, initialize, read_page, load
 
 
-@dataclass
-class App:
+class App(NamedTuple):
     name: str
     func: Callable
 
@@ -13,74 +12,92 @@ class App:
 @dataclass
 class MultiPage:
     st = None
-    __initial_page: App = None
     __apps: List[App] = field(default_factory=list)
-
+    __initial_page: App = None
     start_button: str = "Let's go!"
     navbar_name: str = "Navigation"
     next_page_button: str = "Next Page"
     previous_page_button: str = "Previous Page"
+    navbar_style = "Button"
 
-    @property
-    def initial_page(self) -> App:
-        return self.__initial_page
 
-    @initial_page.setter
-    def initial_page(self, func: Callable) -> None:
-        self.__initial_page = App("__INITIALPAGE__", func)
+    def add_app(self, name: str, func: Callable, initial_page: bool = False) -> None:
+        if initial_page:
+            self.__initial_page = App("__INITIALPAGE__", func)
+            initialize(-1)
+            return
 
-    @property
-    def __initial_page_set(self) -> bool:
-        return self.__initial_page is not None
-
-    def add_app(self, name: str, func: Callable) -> None:
         new_app = App(name, func)
         self.__apps.append(new_app)
 
-    def run(self) -> None:
-        initial_page = -1 if self.__initial_page_set else 0
-        initialize(initial_page)
 
+    def _render_navbar(self, sidebar) -> None:
         page = read_page()
 
-        container_1 = self.st.container()
+        left_column, _, right_column = sidebar.columns(3)
 
-        if page == -1:
-            container_2 = self.st.container()
-            placeholder = self.st.empty()
-            with container_2:
-                if placeholder.button(self.start_button):
-                    page = 0
-                    change_page(page)
-                    placeholder.empty()
+        if left_column.button(self.previous_page_button):
+            page = max(0, page - 1)
+            change_page(page)
 
-        with container_1:
-            if page == -1:
-                self.__initial_page.func()
-                return
+        if right_column.button(self.next_page_button):
+            page = min(len(self.__apps) - 1, page + 1)
+            change_page(page)
 
-            side_1, side_2 = self.st.sidebar.columns(2)
+        sidebar.markdown(
+            f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
+            unsafe_allow_html=True,
+        )
+        sidebar.text("\n")
 
-            with side_1:
-                if self.st.button(self.previous_page_button):
-                    page = max(0, page - 1)
-                    change_page(page)
+        possible_styles = ["Button", "SelectBox"]
 
-            with side_2:
-                if self.st.button(self.next_page_button):
-                    page = min(len(self.__apps) - 1, page + 1)
-                    change_page(page)
+        if self.navbar_style not in possible_styles:
+            sidebar.warning("Invalid Navbar Style - Using Button")
+            self.navbar_style = "Button"
 
-            self.st.sidebar.markdown(
-                f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
-                unsafe_allow_html=True,
-            )
-            self.st.sidebar.text("\n")
-
-            for index, app in enumerate(self.__apps):
-                if self.st.sidebar.button(app.name):
+        if self.navbar_style == "Button":
+            columns = sidebar.columns(len(self.__apps))
+            for index, (columnm, app) in enumerate(zip(columns, self.__apps)):
+                if columnm.button(app.name):
                     change_page(index)
+        
+        if self.navbar_style == "SelectBox":
+            app_names = [app.name for app in self.__apps]
+            app_name = sidebar.selectbox("", app_names)
+            next_page = app_names.index(app_name)
+            change_page(next_page)
 
-            data = load()
+        sidebar.write("---")
 
-            self.__apps[page].func(self.st, **data)
+
+    def _render_landing_page(self, st):
+        page = read_page()
+
+        if page != -1:
+            return False
+
+        body = self.st.container()
+        footer = self.st.container()
+
+        if footer.button(self.start_button):
+            change_page(0)
+
+        self.__initial_page.func(body)
+        initialize(0)
+
+        return True
+
+
+    def run(self) -> None:
+        landing_page = self._render_landing_page(self.st)
+
+        if landing_page:
+            return
+
+        self._render_navbar(self.st.sidebar)
+
+        data = load()
+
+        page = read_page()
+        self.__apps[page].func(self.st, **data)
