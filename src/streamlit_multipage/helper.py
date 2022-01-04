@@ -73,7 +73,6 @@ def clear_cache(
         data = load()
         for namespace in namespaces:
             for variable in variables:
-                print(variable, namespace)
                 if variable not in data[namespace]:
                     continue
 

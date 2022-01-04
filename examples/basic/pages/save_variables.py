@@ -1,8 +1,7 @@
-import streamlit as st
-from multipage import save
+from streamlit_multipage import save
 
 
-def save_app(**prev_vars):
+def save_app(st, **prev_vars):
     variables = prev_vars.get("App1", {})
 
     if not (variables and "start_index" in variables):
