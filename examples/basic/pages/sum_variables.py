@@ -1,8 +1,7 @@
-import streamlit as st
 from streamlit_multipage import save
 
 
-def sum_variables(**prev_vars):
+def sum_variables(st, **prev_vars):
 
     if not prev_vars:
         st.write("Ooops... You forgot to save the variables...")

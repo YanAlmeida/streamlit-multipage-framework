@@ -1,8 +1,7 @@
-import streamlit as st
 from streamlit_multipage import save, clear_cache
 
 
-def multiply_variables(**prev_vars):
+def multiply_variables(st, **prev_vars):
     if not prev_vars:
         st.write("Ooops... You forgot to save the variables...")
         start_index = prev_vars

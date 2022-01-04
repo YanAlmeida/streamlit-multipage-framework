@@ -1,10 +1,20 @@
+from pathlib import Path
+
 from streamlit_multipage import MultiPage, start_app
 
-from pages import pages, start_page
+from pages import pages
+
+import streamlit as st
+
+
+def start_page():
+	st.markdown(Path("README.md").read_text())
+
 
 start_app()
 
 app = MultiPage()
+app.st = st
 app.initial_page = start_page
 app.start_button = "Let's go!"
 app.navbar_name = "Navigation"

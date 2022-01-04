@@ -3,8 +3,6 @@ from typing import List, Callable
 
 from .helper import change_page, initialize, read_page, load
 
-import streamlit as st
-
 
 @dataclass
 class App:
@@ -14,6 +12,7 @@ class App:
 
 @dataclass
 class MultiPage:
+    st = None
     __initial_page: App = None
     __apps: List[App] = field(default_factory=list)
 
@@ -44,11 +43,11 @@ class MultiPage:
 
         page = read_page()
 
-        container_1 = st.container()
+        container_1 = self.st.container()
 
         if page == -1:
-            container_2 = st.container()
-            placeholder = st.empty()
+            container_2 = self.st.container()
+            placeholder = self.st.empty()
             with container_2:
                 if placeholder.button(self.start_button):
                     page = 0
@@ -60,31 +59,28 @@ class MultiPage:
                 self.__initial_page.func()
                 return
 
-            side_1, side_2 = st.sidebar.columns(2)
+            side_1, side_2 = self.st.sidebar.columns(2)
 
             with side_1:
-                if st.button(self.previous_page_button):
+                if self.st.button(self.previous_page_button):
                     page = max(0, page - 1)
                     change_page(page)
 
             with side_2:
-                if st.button(self.next_page_button):
+                if self.st.button(self.next_page_button):
                     page = min(len(self.__apps) - 1, page + 1)
                     change_page(page)
 
-            st.sidebar.markdown(
+            self.st.sidebar.markdown(
                 f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
                 unsafe_allow_html=True,
             )
-            st.sidebar.text("\n")
+            self.st.sidebar.text("\n")
 
-            for i in range(len(self.__apps)):
-                if st.sidebar.button(self.__apps[i].name):
-                    page = i
-                    change_page(page)
+            for index, app in enumerate(self.__apps):
+                if self.st.sidebar.button(app.name):
+                    change_page(index)
 
             data = load()
 
-            print(data)
-
-            self.__apps[page].func(**data)
+            self.__apps[page].func(self.st, **data)
