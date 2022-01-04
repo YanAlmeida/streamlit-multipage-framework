@@ -1,6 +1,16 @@
-[![PyPI Badge](https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml/badge.svg)](https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml)
-
 # Streamlit Multipage
+
+<center>
+    <a href="https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml">
+        <img src="https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml/badge.svg">
+    </a>
+    <a href="https://pepy.tech/project/streamlit-multipage">
+        <img src="https://pepy.tech/badge/streamlit-multipage">
+    </a>
+    <a href="https://pypi.org/project/streamlit-multipage/">
+        <img src="https://img.shields.io/pypi/v/streamlit-multipage">
+    </a>
+</center>
 
 Framework for implementing multipage structure in streamlit apps.
 It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/streamlit-multiapps.
