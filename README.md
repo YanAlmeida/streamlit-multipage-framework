@@ -1,4 +1,7 @@
-# streamlit-multipage-framework
+[![PyPI Badge](https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml/badge.svg)](https://github.com/ELC/streamlit-multipage/actions/workflows/python-publish.yml)
+
+# Streamlit Multipage
+
 Framework for implementing multipage structure in streamlit apps.
 It was inspired by upraneelnihar's project: https://github.com/upraneelnihar/streamlit-multiapps.
 
