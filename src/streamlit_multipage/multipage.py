@@ -69,8 +69,8 @@ class MultiPage:
             change_page(next_page)
 
         sidebar.write("---")
-
-
+        
+        
     def _render_landing_page(self, st):
         page = read_page()
 
