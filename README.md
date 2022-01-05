@@ -38,6 +38,7 @@ Wrap it into a function with a `st` parameter and arbitrary keyword arguments.
 import streamlit as st
 from streamlit_multipage import MultiPage
 
+
 def my_page(st, **state):
     st.title("My Amazing App")
     name = st.text_input("Your Name: ")
@@ -63,6 +64,7 @@ runs (running `streamlit run`). The variables can be saved by calling the
 ```python
 import streamlit as st
 from streamlit_multipage import MultiPage, save
+
 
 def my_page(st, **state):
     st.title("My Amazing App")
@@ -154,7 +156,7 @@ def input_page(st, **state):
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
     
     if total:
-        save({"total": total}, namespaces=["result"])
+        save({"total": total}, namespaces=[namespace, "result"])
 
 
 def compute_page(st, **state):
@@ -304,6 +306,7 @@ from pages import pages
 import streamlit as st
 from streamlit_multipage import MultiPage, start_app
 
+
 app = MultiPage()
 app.st = st
 
@@ -404,7 +407,6 @@ pip install streamlit-multipage
 The only dependency is `streamlit` which should be already installed. It will
 be installed automatically if not present. Optionally, `joblib` can be
 installed if the `pickle` module cannot handle the object in the saved state.
-
 
 ## Similar projects
 

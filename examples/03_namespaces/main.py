@@ -19,7 +19,7 @@ def input_page(st, **state):
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
     
     if total:
-        save({"total": total}, namespaces=["result"])
+        save({"total": total}, namespaces=[namespace, "result"])
 
 
 def compute_page(st, **state):
