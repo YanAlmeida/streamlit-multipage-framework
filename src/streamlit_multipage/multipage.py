@@ -69,8 +69,8 @@ class MultiPage:
             change_page(next_page)
 
         sidebar.write("---")
-
-
+        
+        
     def _render_landing_page(self, st):
         page = read_page()
 
@@ -98,6 +98,10 @@ class MultiPage:
         self._render_navbar(self.st.sidebar)
 
         data = load()
-
         page = read_page()
-        self.__apps[page].func(self.st, **data)
+        app = self.__apps[page]
+
+        if app.name in data:
+            data = data[app.name]
+            
+        app.func(self.st, **data)
