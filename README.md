@@ -44,6 +44,7 @@ def my_page(st, **state):
     name = st.text_input("Your Name: ")
     st.write(f"Hello {name}!")
 
+
 app = MultiPage()
 app.st = st
 
@@ -74,6 +75,7 @@ def my_page(st, **state):
 
     save({"name": name})
 
+
 app = MultiPage()
 app.st = st
 
@@ -94,11 +96,11 @@ from streamlit_multipage import MultiPage, save
 
 def input_page(st, **state):
     st.title("Body Mass Index")
-    
-    weight_ = state["weight"] if "weight" in state else 0.
+
+    weight_ = state["weight"] if "weight" in state else 0.0
     weight = st.number_input("Your weight (Kg): ", value=weight_)
 
-    height_ = state["height"] if "height" in state else 0.
+    height_ = state["height"] if "height" in state else 0.0
     height = st.number_input("Your height (m): ", value=height_)
 
     if height and weight:
@@ -115,7 +117,7 @@ def compute_page(st, **state):
     weight = state["weight"]
     height = state["height"]
 
-    st.metric("BMI", round(weight / height**2, 2))
+    st.metric("BMI", round(weight / height ** 2, 2))
 
 
 app = MultiPage()
@@ -143,18 +145,18 @@ def input_page(st, **state):
     namespace = "input"
     variables = state[namespace] if namespace in state else {}
     st.title("Tax Deduction")
-    
-    salary_ = variables["salary"] if "salary" in variables else 0.
+
+    salary_ = variables["salary"] if "salary" in variables else 0.0
     salary = st.number_input("Your salary (USD): ", value=salary_)
 
-    tax_percent_ = variables["tax_percent"] if "tax_percent" in variables else 0.
+    tax_percent_ = variables["tax_percent"] if "tax_percent" in variables else 0.0
     tax_percent = st.number_input("Taxes (%): ", value=tax_percent_)
 
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
-    
+
     if total:
         save({"total": total}, namespaces=[namespace, "result"])
 
@@ -194,18 +196,18 @@ from streamlit_multipage import MultiPage, save
 
 def input_page(st, **state):
     st.title("Tax Deduction")
-    
-    salary_ = state["salary"] if "salary" in state else 0.
+
+    salary_ = state["salary"] if "salary" in state else 0.0
     salary = st.number_input("Your salary (USD): ", value=salary_)
 
-    tax_percent_ = state["tax_percent"] if "tax_percent" in state else 0.
+    tax_percent_ = state["tax_percent"] if "tax_percent" in state else 0.0
     tax_percent = st.number_input("Taxes (%): ", value=tax_percent_)
 
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
-    
+
     if total:
         save({"total": total}, namespaces=["Net Salary"])
 
@@ -255,18 +257,18 @@ from streamlit_multipage import save
 
 def input_page(st, **state):
     st.title("Tax Deduction")
-    
-    salary_ = state["salary"] if "salary" in state else 0.
+
+    salary_ = state["salary"] if "salary" in state else 0.0
     salary = st.number_input("Your salary (USD): ", value=salary_)
 
-    tax_percent_ = state["tax_percent"] if "tax_percent" in state else 0.
+    tax_percent_ = state["tax_percent"] if "tax_percent" in state else 0.0
     tax_percent = st.number_input("Taxes (%): ", value=tax_percent_)
 
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
-    
+
     if total:
         save({"total": total}, namespaces=["Net Salary"])
 ```
@@ -338,6 +340,7 @@ def compute_page(st, **state):
 def landing_page(st):
     st.title("This is a Multi Page Application")
     st.write("Feel free to leave give a star in the Github Repo")
+
 
 app = MultiPage()
 app.st = st

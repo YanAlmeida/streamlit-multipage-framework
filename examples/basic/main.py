@@ -8,7 +8,7 @@ import streamlit as st
 
 
 def start_page(st):
-	st.markdown(Path("README.md").read_text())
+    st.markdown(Path("README.md").read_text())
 
 
 start_app()

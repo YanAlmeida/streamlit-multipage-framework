@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_multipage import MultiPage, save
 
+
 def my_page(st, **state):
     st.title("My Amazing App")
     name_ = state["name"] if "name" in state else ""
@@ -8,6 +9,7 @@ def my_page(st, **state):
     st.write(f"Hello {name}!")
 
     save({"name": name})
+
 
 app = MultiPage()
 app.st = st

@@ -6,18 +6,18 @@ def input_page(st, **state):
     namespace = "input"
     variables = state[namespace] if namespace in state else {}
     st.title("Tax Deduction")
-    
-    salary_ = variables["salary"] if "salary" in variables else 0.
+
+    salary_ = variables["salary"] if "salary" in variables else 0.0
     salary = st.number_input("Your salary (USD): ", value=salary_)
 
-    tax_percent_ = variables["tax_percent"] if "tax_percent" in variables else 0.
+    tax_percent_ = variables["tax_percent"] if "tax_percent" in variables else 0.0
     tax_percent = st.number_input("Taxes (%): ", value=tax_percent_)
 
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
         save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
-    
+
     if total:
         save({"total": total}, namespaces=[namespace, "result"])
 
