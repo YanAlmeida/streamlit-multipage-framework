@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Union
 from pathlib import Path
 
 import streamlit as st
@@ -35,8 +35,11 @@ def initialize(initial_page: int) -> None:
     change_page(initial_page)
 
 
-def save(variables: Dict[str, Any], namespaces: List[str]) -> None:
-    if not variables or not namespaces:
+def save(variables: Dict[str, Any], namespaces: List[str] = None) -> None:
+    if namespaces is None:
+        namespaces = ["global"]
+    
+    if not variables:
         return
 
     data = load()
@@ -62,7 +65,11 @@ def load() -> Dict[str, Any]:
     if not cache_file.exists():
         return defaultdict(dict)
 
-    return pickling.load(cache_file)
+    data = pickling.load(cache_file)
+    if "global" in data:
+        data.update(data["global"])
+
+    return data
 
 def clear_cache(
     variables: Dict[str, Any] = None,
