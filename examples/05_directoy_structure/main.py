@@ -1,7 +1,7 @@
 from pages import pages
 
 import streamlit as st
-from streamlit_multipage import MultiPage, start_app
+from streamlit_multipage import MultiPage
 
 app = MultiPage()
 app.st = st

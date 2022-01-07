@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -14,10 +14,12 @@ def input_page(st, **state):
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
-        save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
+        MultiPage.save(
+            {"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"]
+        )
 
     if total:
-        save({"total": total}, namespaces=["Net Salary"])
+        MultiPage.save({"total": total}, namespaces=["Net Salary"])
 
 
 def compute_page(st, **state):
