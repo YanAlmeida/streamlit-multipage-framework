@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -12,7 +12,7 @@ def input_page(st, **state):
     height = st.number_input("Your height (m): ", value=height_)
 
     if height and weight:
-        save({"weight": weight, "height": height})
+        MultiPage.save({"weight": weight, "height": height})
 
 
 def compute_page(st, **state):
@@ -35,6 +35,13 @@ def landing_page(st):
 
 app = MultiPage()
 app.st = st
+
+app.start_button = "Go to the main page"
+app.navbar_name = "Other Pages:"
+app.next_page_button = "Next Chapter"
+app.previous_page_button = "Previous Chapter"
+app.reset_button = "Delete Cache"
+app.navbar_style = "SelectBox"
 
 app.add_app("Landing", landing_page, initial_page=True)
 app.add_app("Input Page", input_page)

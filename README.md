@@ -64,7 +64,7 @@ runs (running `streamlit run`). The variables can be saved by calling the
 
 ```python
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def my_page(st, **state):
@@ -73,7 +73,7 @@ def my_page(st, **state):
     name = st.text_input("Your Name: ", value=name_)
     st.write(f"Hello {name}!")
 
-    save({"name": name})
+    MultiPage.save({"name": name})
 
 
 app = MultiPage()
@@ -91,7 +91,7 @@ sanitize the input and make sure the values are available and correct.
 
 ```python
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -104,7 +104,7 @@ def input_page(st, **state):
     height = st.number_input("Your height (m): ", value=height_)
 
     if height and weight:
-        save({"weight": weight, "height": height})
+        MultiPage.save({"weight": weight, "height": height})
 
 
 def compute_page(st, **state):
@@ -138,7 +138,7 @@ namespaces at once.
 
 ```python
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -155,10 +155,10 @@ def input_page(st, **state):
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
-        save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
+        MultiPage.save({"salary": salary, "tax_percent": tax_percent}, namespaces=[namespace])
 
     if total:
-        save({"total": total}, namespaces=[namespace, "result"])
+        MultiPage.save({"total": total}, namespaces=[namespace, "result"])
 
 
 def compute_page(st, **state):
@@ -191,7 +191,7 @@ state will be pre-filtered before sending it to the function.
 
 ```python
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -206,10 +206,10 @@ def input_page(st, **state):
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
-        save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
+        MultiPage.save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
 
     if total:
-        save({"total": total}, namespaces=["Net Salary"])
+        MultiPage.save({"total": total}, namespaces=["Net Salary"])
 
 
 def compute_page(st, **state):
@@ -252,7 +252,7 @@ structure to have an organize project.
 #### input_data.py
 
 ```python
-from streamlit_multipage import save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -267,10 +267,10 @@ def input_page(st, **state):
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
-        save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
+        MultiPage.save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
 
     if total:
-        save({"total": total}, namespaces=["Net Salary"])
+        MultiPage.save({"total": total}, namespaces=["Net Salary"])
 ```
 
 #### Result.py
@@ -306,7 +306,7 @@ pages = {
 from pages import pages
 
 import streamlit as st
-from streamlit_multipage import MultiPage, start_app
+from streamlit_multipage import MultiPage
 
 
 app = MultiPage()
@@ -376,10 +376,12 @@ def landing_page(st):
 
 app = MultiPage()
 app.st = st
+
 app.start_button = "Go to the main page"
 app.navbar_name = "Other Pages:"
 app.next_page_button = "Next Chapter"
 app.previous_page_button = "Previous Chapter"
+app.reset_button = "Delete Cache"
 app.navbar_style = "SelectBox"
 
 app.add_app("Landing", landing_page, initial_page=True)
@@ -395,7 +397,7 @@ app.run()
 
 This is a really simple script, if introducing new and small dependencies is
 not desired, simply copy and paste the content of the `src` folder into your
-project (two-files). Beware that this method does not include all the
+project (one single file). Beware that this method does not include all the
 advantages of using a dependency such as updates, dependency tracking and so
 on.
 

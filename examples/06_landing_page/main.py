@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
@@ -12,7 +12,7 @@ def input_page(st, **state):
     height = st.number_input("Your height (m): ", value=height_)
 
     if height and weight:
-        save({"weight": weight, "height": height})
+        MultiPage.save({"weight": weight, "height": height})
 
 
 def compute_page(st, **state):
