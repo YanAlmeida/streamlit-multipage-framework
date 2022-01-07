@@ -13,7 +13,9 @@ def input_page(st, **state):
     total = salary * (1 - tax_percent)
 
     if tax_percent and salary:
-        MultiPage.save({"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"])
+        MultiPage.save(
+            {"salary": salary, "tax_percent": tax_percent}, namespaces=["Input Page"]
+        )
 
     if total:
         MultiPage.save({"total": total}, namespaces=["Net Salary"])

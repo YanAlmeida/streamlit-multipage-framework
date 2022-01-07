@@ -7,9 +7,11 @@ import streamlit as st
 
 try:
     import joblib
+
     pickling = joblib
 except ImportError:
     import pickle
+
     pickling = pickle
 
 
@@ -26,7 +28,6 @@ class StateManager:
     def change_page(self, page: int) -> None:
         self.save({"current_page": page}, ["global"])
 
-
     def _read_page(self) -> int:
         data = self._load()["global"]
 
@@ -35,16 +36,14 @@ class StateManager:
 
         return -1
 
-
     @st.cache(suppress_st_warning=True)
     def _initialize(self, initial_page: int) -> None:
         self.change_page(initial_page)
 
-
     def save(self, variables: Dict[str, Any], namespaces: List[str] = None) -> None:
         if namespaces is None:
             namespaces = ["global"]
-        
+
         if not variables:
             return
 
@@ -61,11 +60,9 @@ class StateManager:
 
         self._save(data)
 
-
     def _save(self, data: Dict[str, Any]) -> None:
         self.cache.mkdir(parents=True, exist_ok=True)
         pickling.dump(data, self.cache_file)
-
 
     def _load(self) -> Dict[str, Any]:
         if not self.cache_file.exists():
@@ -77,12 +74,13 @@ class StateManager:
 
         return data
 
-    def clear_cache(self, 
+    def clear_cache(
+        self,
         variables: Dict[str, Any] = None,
         namespaces: List[str] = None,
         all_variables: bool = False,
     ) -> None:
-        
+
         if not variables or not namespaces:
             return
 
@@ -122,7 +120,6 @@ class MultiPage:
     navbar_style = "Button"
     __state_manager: ClassVar[StateManager] = state
 
-
     def add_app(self, name: str, func: Callable, initial_page: bool = False) -> None:
         if initial_page:
             self.__initial_page = App("__INITIALPAGE__", func)
@@ -130,7 +127,6 @@ class MultiPage:
 
         new_app = App(name, func)
         self.__apps.append(new_app)
-
 
     def _render_navbar(self, sidebar) -> None:
         page = self.__state_manager._read_page()
@@ -166,7 +162,7 @@ class MultiPage:
             for index, (columnm, app) in enumerate(zip(columns, self.__apps)):
                 if columnm.button(app.name):
                     self.__state_manager.change_page(index)
-        
+
         if self.navbar_style == "SelectBox":
             app_names = [app.name for app in self.__apps]
             app_name = sidebar.selectbox("", app_names)
@@ -174,8 +170,7 @@ class MultiPage:
             self.__state_manager.change_page(next_page)
 
         sidebar.write("---")
-        
-        
+
     def _render_landing_page(self) -> bool:
         page = self.__state_manager._read_page()
 
@@ -192,7 +187,6 @@ class MultiPage:
         self.__state_manager.change_page(0)
 
         return True
-
 
     def _run(self) -> None:
 
@@ -212,7 +206,7 @@ class MultiPage:
                 return
 
         data = self.__state_manager._load()
-        
+
         if page >= len(self.__apps):
             page = -1
 
@@ -220,29 +214,31 @@ class MultiPage:
 
         if app.name in data:
             data = data[app.name]
-            
+
         app.func(self.st, **data)
 
-
-    def run(self, avoid_collisions: bool=True) -> None:
+    def run(self, avoid_collisions: bool = True) -> None:
         if avoid_collisions:
             import hashlib
+
             app_names = sorted(app.name for app in self.__apps)
             names_concatenated = "".join(app_names).encode("utf-8")
-            cache_filename = hashlib.sha256(names_concatenated).hexdigest()[-10:] + ".pkl"
+            cache_filename = (
+                hashlib.sha256(names_concatenated).hexdigest()[-10:] + ".pkl"
+            )
             self.__state_manager.cache_filename = cache_filename
-        
+
         self._run()
 
-
     @classmethod
-    def clear_cache(cls,   
+    def clear_cache(
+        cls,
         variables: Dict[str, Any] = None,
         namespaces: List[str] = None,
         all_variables: bool = False,
     ) -> None:
         cls.__state_manager.clear_cache(variables, namespaces, all_variables)
-    
+
     @classmethod
     def save(cls, variables: Dict[str, Any], namespaces: List[str] = None) -> None:
         cls.__state_manager.save(variables, namespaces)
