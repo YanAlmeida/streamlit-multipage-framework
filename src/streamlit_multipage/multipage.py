@@ -119,6 +119,35 @@ class MultiPage:
     reset_button: str = "Reset Cache"
     navbar_style = "Button"
     __state_manager: ClassVar[StateManager] = state
+    hide_menu: bool = False
+    hide_navigation: bool = False
+    __header: App = None
+    __footer: App = None
+    __navbar_extra: App = None
+
+    @property
+    def header(self) -> App:
+        return self.__header
+
+    @header.setter
+    def header(self, value: Callable) -> None:
+        self.__header = App("Header", value)
+
+    @property
+    def footer(self) -> App:
+        return self.__footer
+
+    @footer.setter
+    def footer(self, value: Callable) -> None:
+        self.__footer = App("Footer", value)
+
+    @property
+    def navbar_extra(self) -> App:
+        return self.__navbar_extra
+
+    @navbar_extra.setter
+    def navbar_extra(self, value: Callable) -> None:
+        self.__navbar_extra = App("Navbar_extra", value)
 
     def add_app(self, name: str, func: Callable, initial_page: bool = False) -> None:
         if initial_page:
@@ -128,9 +157,7 @@ class MultiPage:
         new_app = App(name, func)
         self.__apps.append(new_app)
 
-    def _render_navbar(self, sidebar) -> None:
-        page = self.__state_manager._read_page()
-
+    def _render_next_previous(self, sidebar):
         left_column, middle_column, right_column = sidebar.columns(3)
 
         if middle_column.button(self.reset_button):
@@ -145,23 +172,35 @@ class MultiPage:
             page = min(len(self.__apps) - 1, page + 1)
             self.__state_manager.change_page(page)
 
+    def _render_navbar(self, sidebar) -> None:
+        page = self.__state_manager._read_page()
+
+        if not self.hide_navigation:
+            _render_next_previous(sidebar)
+
         sidebar.markdown(
             f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
             unsafe_allow_html=True,
         )
         sidebar.text("\n")
 
-        possible_styles = ["Button", "SelectBox"]
+        possible_styles = ["VerticalButton", "HorizontalButton", "SelectBox"]
 
         if self.navbar_style not in possible_styles:
             sidebar.warning("Invalid Navbar Style - Using Button")
-            self.navbar_style = "Button"
+            self.navbar_style = "HorizontalButton"
 
-        if self.navbar_style == "Button":
-            columns = sidebar.columns(len(self.__apps))
-            for index, (columnm, app) in enumerate(zip(columns, self.__apps)):
-                if columnm.button(app.name):
-                    self.__state_manager.change_page(index)
+        if "Button" in self.navbar_style:
+            if self.navbar_style == "HorizontalButton":
+                columns = sidebar.columns(len(self.__apps))
+                for index, (columnm, app) in enumerate(zip(columns, self.__apps)):
+                    if columnm.button(app.name):
+                        self.__state_manager.change_page(index)
+
+            elif self.navbar_style == "VerticalButton":
+                for index, app in enumerate(self.__apps):
+                    if sidebar.button(app.name):
+                        self.__state_manager.change_page(index)
 
         if self.navbar_style == "SelectBox":
             app_names = [app.name for app in self.__apps]
@@ -170,6 +209,9 @@ class MultiPage:
             self.__state_manager.change_page(next_page)
 
         sidebar.write("---")
+
+        if self.navbar_extra:
+            self.navbar_extra.func(sidebar)
 
     def _render_landing_page(self) -> bool:
         page = self.__state_manager._read_page()
@@ -190,10 +232,22 @@ class MultiPage:
 
     def _run(self) -> None:
 
+        if self.hide_menu:
+            hide_menu = """
+                <style>
+                #MainMenu {display: none;}
+                footer {visibility: hidden;}
+                </style>
+            """
+            st.markdown(hide_menu, unsafe_allow_html=True)
+
         landing_page = self._render_landing_page()
 
         if landing_page:
             return
+
+        if self.header:
+            self.header.func(self.st)
 
         self._render_navbar(self.st.sidebar)
 
@@ -216,6 +270,9 @@ class MultiPage:
             data = data[app.name]
 
         app.func(self.st, **data)
+
+        if self.footer:
+            self.footer.func(self.st)
 
     def run(self, avoid_collisions: bool = True) -> None:
         if avoid_collisions:
