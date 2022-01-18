@@ -1,18 +1,18 @@
 import streamlit as st
-from streamlit_multipage import MultiPage, save
+from streamlit_multipage import MultiPage
 
 
 def input_page(st, **state):
     st.title("Body Mass Index")
-    
-    weight_ = state["weight"] if "weight" in state else 0.
+
+    weight_ = state["weight"] if "weight" in state else 0.0
     weight = st.number_input("Your weight (Kg): ", value=weight_)
 
-    height_ = state["height"] if "height" in state else 0.
+    height_ = state["height"] if "height" in state else 0.0
     height = st.number_input("Your height (m): ", value=height_)
 
     if height and weight:
-        save({"weight": weight, "height": height})
+        MultiPage.save({"weight": weight, "height": height})
 
 
 def compute_page(st, **state):
@@ -25,12 +25,13 @@ def compute_page(st, **state):
     weight = state["weight"]
     height = state["height"]
 
-    st.metric("BMI", round(weight / height**2, 2))
+    st.metric("BMI", round(weight / height ** 2, 2))
 
 
 def landing_page(st):
     st.title("This is a Multi Page Application")
     st.write("Feel free to leave give a star in the Github Repo")
+
 
 app = MultiPage()
 app.st = st

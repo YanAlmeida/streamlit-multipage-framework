@@ -4,6 +4,7 @@ from pages import pages
 from streamlit_multipage import MultiPage
 import streamlit as st
 
+
 def start_page(st, **prev_vars):
     st.title("Simple Independent Example")
 
