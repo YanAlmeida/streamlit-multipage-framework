@@ -176,7 +176,7 @@ class MultiPage:
         page = self.__state_manager._read_page()
 
         if not self.hide_navigation:
-            _render_next_previous(sidebar)
+            self._render_next_previous(sidebar)
 
         sidebar.markdown(
             f"""<h1 style="text-align:center;">{self.navbar_name}</h1>""",
